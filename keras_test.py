@@ -3,12 +3,17 @@
 
 import os, glob
 import re
-import keras
-from keras.utils import np_utils
+# import keras
+# from keras.utils import np_utils
+from tensorflow.keras.utils import to_categorical
+#from keras.layers.convolutional import Conv2D, MaxPooling2D
 from keras.layers.convolutional import Conv2D, MaxPooling2D
-from keras.models import Sequential
-from keras.layers.core import Dense, Dropout, Activation, Flatten
-from keras.preprocessing.image import array_to_img, img_to_array, load_img
+# from keras.models import Sequential
+from tensorflow.keras.models import Sequential
+# from keras.layers.core import Dense, Dropout, Activation, Flatten
+from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten
+# from keras.preprocessing.image import array_to_img, img_to_array, load_img
+from tensorflow.keras.preprocessing.image import array_to_img, img_to_array, load_img
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -57,7 +62,8 @@ X = X.astype('float32')
 X = X / 255.0
 
 # クラスの形式を変換
-Y = np_utils.to_categorical(Y, 2)
+# Y = np_utils.to_categorical(Y, 2)
+Y = to_categorical(Y, 2)
 
 # 学習用データとテストデータ
 X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.33, random_state=111)
