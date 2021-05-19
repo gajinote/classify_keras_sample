@@ -7,7 +7,7 @@ import re
 # from keras.utils import np_utils
 from tensorflow.keras.utils import to_categorical
 #from keras.layers.convolutional import Conv2D, MaxPooling2D
-from keras.layers.convolutional import Conv2D, MaxPooling2D
+from tensorflow.keras.layers import Conv2D, MaxPooling2D
 # from keras.models import Sequential
 from tensorflow.keras.models import Sequential
 # from keras.layers.core import Dense, Dropout, Activation, Flatten
