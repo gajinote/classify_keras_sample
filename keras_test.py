@@ -119,6 +119,9 @@ mg_df = pd.DataFrame({'predict': predict_classes, 'class': np.argmax(y_test, axi
 # confusion matrix
 pd.crosstab(mg_df['class'], mg_df['predict'])
 
+loss, acc = model.evaluate(X_test, y_test, verbose=2)
+print("model accuracy: {:5.2f}%".format(100*acc))
+
 # print(mg_df['class'], mg_df['predict'])
 
 # 重みの保存
