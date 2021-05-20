@@ -26,11 +26,14 @@ print("\n Pre load Success.")
 X = []
 Y = []
 
+x_size = 64
+y_size = 64
+
 # 対象Aの画像
 cat_image = list_pictures('./cat/', 'jpg')
 # print(cat_image)
 for picture in cat_image:
-    img = img_to_array(load_img(picture, target_size=(64,64)))
+    img = img_to_array(load_img(picture, target_size=(x_size, y_size)))
     X.append(img)
 
     Y.append(0)
@@ -39,7 +42,7 @@ for picture in cat_image:
 dog_image = list_pictures('./dog/', 'jpg')
 # print(dog_image)
 for picture in dog_image:
-    img = img_to_array(load_img(picture, target_size=(64,64)))
+    img = img_to_array(load_img(picture, target_size=(x_size, y_size)))
     X.append(img)
 
     Y.append(1)
@@ -90,7 +93,7 @@ model.add(Activation('softmax'))
 
 # コンパイル
 model.compile(loss='categorical_crossentropy',
-              optimizer='SGD',
+              optimizer='Adam',
               metrics=['accuracy'])
 
 # 実行。出力はなしで設定(verbose=0)。
