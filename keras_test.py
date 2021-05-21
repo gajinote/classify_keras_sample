@@ -105,6 +105,9 @@ model.compile(loss='categorical_crossentropy',
 history = model.fit(X_train, y_train, batch_size=5, epochs=200,
                    validation_data = (X_test, y_test), verbose = 1)
 
+# 重みの保存
+model.save_weights('./checkpoint/my_checkpoint')
+
 # 学習履歴の表示
 # print(history.history['accuracy'])
 
@@ -130,8 +133,5 @@ loss, acc = model.evaluate(X_test, y_test, verbose=2)
 print("model accuracy: {:5.2f}%".format(100*acc))
 
 # print(mg_df['class'], mg_df['predict'])
-
-# 重みの保存
-model.save_weights('./checkpoint/my_checkpoint')
 
 print("\n learning finish.")
