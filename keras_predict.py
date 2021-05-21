@@ -68,7 +68,7 @@ X = X / 255.0
 Y = to_categorical(Y, 2)
 
 # 学習用データとテストデータ
-X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.33, random_state=111)
+X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.33)
 
 print("\n Dataset setting Success.")
 
