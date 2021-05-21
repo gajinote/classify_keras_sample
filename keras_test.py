@@ -30,6 +30,7 @@ Y = []
 x_size = 64
 y_size = 64
 lr_param = 0.01
+moment=0.01
 dog_dir = './dog/'
 cat_dir = './cat/'
 
@@ -97,7 +98,7 @@ model.add(Activation('softmax'))
 
 # コンパイル
 model.compile(loss='categorical_crossentropy',
-              optimizer=SGD(learning_rate=lr_param),
+              optimizer=SGD(learning_rate=lr_param, momentum=moment),
               metrics=['accuracy'])
 
 # 実行。出力はなしで設定(verbose=0)。
