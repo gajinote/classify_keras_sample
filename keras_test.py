@@ -7,6 +7,7 @@ from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten, Conv2D, MaxPooling2D
 from tensorflow.keras.preprocessing.image import array_to_img, img_to_array, load_img
+from tensorflow.keras.optimizers import SGD, Adagrad
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -28,9 +29,12 @@ Y = []
 
 x_size = 64
 y_size = 64
+lr_param = 0.01
+dog_dir = './dog/'
+cat_dir = './cat/'
 
 # 対象Aの画像
-cat_image = list_pictures('./cat/', 'jpg')
+cat_image = list_pictures(cat_dir, 'jpg')
 # print(cat_image)
 for picture in cat_image:
     img = img_to_array(load_img(picture, target_size=(x_size, y_size)))
@@ -39,7 +43,7 @@ for picture in cat_image:
     Y.append(0)
 
 # 対象Bの画像
-dog_image = list_pictures('./dog/', 'jpg')
+dog_image = list_pictures(dog_dir, 'jpg')
 # print(dog_image)
 for picture in dog_image:
     img = img_to_array(load_img(picture, target_size=(x_size, y_size)))
@@ -93,7 +97,7 @@ model.add(Activation('softmax'))
 
 # コンパイル
 model.compile(loss='categorical_crossentropy',
-              optimizer='SGD',
+              optimizer=SGD(learning_rate=lr_param),
               metrics=['accuracy'])
 
 # 実行。出力はなしで設定(verbose=0)。
