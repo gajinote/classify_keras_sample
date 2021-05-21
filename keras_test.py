@@ -93,7 +93,7 @@ model.add(Activation('softmax'))
 
 # コンパイル
 model.compile(loss='categorical_crossentropy',
-              optimizer='Adam',
+              optimizer='SGD',
               metrics=['accuracy'])
 
 # 実行。出力はなしで設定(verbose=0)。
