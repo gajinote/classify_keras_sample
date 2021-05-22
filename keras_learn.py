@@ -108,17 +108,6 @@ history = model.fit(X_train, y_train, batch_size=5, epochs=200,
 # 重みの保存
 model.save_weights('./checkpoint/my_checkpoint')
 
-# 学習履歴の表示
-# print(history.history['accuracy'])
-
-plt.plot(history.history['accuracy'])
-plt.plot(history.history['val_accuracy'])
-plt.title('model accuracy')
-plt.xlabel('epoch')
-plt.ylabel('accuracy')
-plt.legend(['acc', 'val_acc'], loc='lower right')
-plt.show()
-
 # テストデータに適用
 # predict_classes = model.predict_classes(X_test)
 predict_classes = np.argmax(model.predict(X_test), axis=-1)
@@ -133,5 +122,15 @@ loss, acc = model.evaluate(X_test, y_test, verbose=2)
 print("model accuracy: {:5.2f}%".format(100*acc))
 
 # print(mg_df['class'], mg_df['predict'])
+# 学習履歴の表示
+# print(history.history['accuracy'])
+
+plt.plot(history.history['accuracy'])
+plt.plot(history.history['val_accuracy'])
+plt.title('model accuracy')
+plt.xlabel('epoch')
+plt.ylabel('accuracy')
+plt.legend(['acc', 'val_acc'], loc='lower right')
+plt.show()
 
 print("\n learning finish.")
