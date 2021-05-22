@@ -96,6 +96,12 @@ model.add(Dropout(0.5))
 model.add(Dense(2))       # クラスは2個
 model.add(Activation('softmax'))
 
+print("\n model Summary\n")
+
+model.summary()
+
+print("\n Compile Start!!\n")
+
 # コンパイル
 model.compile(loss='categorical_crossentropy',
               optimizer=SGD(learning_rate=lr_param, momentum=moment),
