@@ -101,7 +101,7 @@ model.add(Activation('softmax'))
 model.load_weights('./checkpoint/my_checkpoint')
 
 # テストデータ10件の正解ラベル
-y_label = np.argmax(y_test[0:10], axis = 1)
+y_label = np.argmax(y_test[0:30], axis = 1)
 # true_classes = np.argmax(y_test[0:10], axis = 1)
 true_classes = []
 for i in y_label:
@@ -114,7 +114,7 @@ for i in y_label:
 
 
 # テストデータの予測ラベル
-x_label = np.argmax(model.predict(X_test[0:10]), axis=1)
+x_label = np.argmax(model.predict(X_test[0:30]), axis=1)
 pred_class = []
 for i in x_label:
   label = ""
@@ -124,13 +124,13 @@ for i in x_label:
     label = "dog"
   pred_class.append(label)
 
-pred_probs = np.max(model.predict(X_test[0:10]), axis=1)
+pred_probs = np.max(model.predict(X_test[0:30]), axis=1)
 pred_probs = ['{:.4f}'.format(i) for i in pred_probs]
 
 # テストデータの画像と正解ラベルを出力
-plt.figure(figsize=(5, 3))
-for i in range(10):
-  plt.subplot(2, 5, i+1)
+plt.figure(figsize=(16, 6))
+for i in range(30):
+  plt.subplot(3, 10, i+1)
   plt.axis("off")
   if pred_class[i] == true_classes[i]:
     plt.title(true_classes[i] + '\n' + pred_probs[i])
