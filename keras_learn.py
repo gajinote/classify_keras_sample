@@ -38,9 +38,22 @@ cat_dir = './cat/'
 cat_image = list_pictures(cat_dir, 'jpg')
 # print(cat_image)
 for picture in cat_image:
-    img = img_to_array(load_img(picture, target_size=(x_size, y_size)))
+    # img = img_to_array(load_img(picture, target_size=(x_size, y_size)))
+    base_imga = load_img(picture)
+    width, height = base_imga.size
+    if width > height:
+      aspect = height / width
+      tgt_y = (int)(y_size * aspect)
+      img = img_to_array(load_img(picture, target_size=(x_size, tgt_y)))
+      img = np.pad(img, [(0, 0), (0, y_size - tgt_y), (0,0)], 'constant')
+    elif width < height:
+      aspect = width / height
+      tgt_x = (int)(x_size * aspect)
+      img = img_to_array(load_img(picture, target_size=(tgt_x, y_size)))
+      img = np.pad(img, [(0, x_size - tgt_x), (0, 0), (0,0)], 'constant')
+    else:
+      img = img_to_array(load_img(picture, target_size=(x_size, y_size)))
     X.append(img)
-
     Y.append(0)
 
 # 対象Bの画像
@@ -48,8 +61,21 @@ dog_image = list_pictures(dog_dir, 'jpg')
 # print(dog_image)
 for picture in dog_image:
     img = img_to_array(load_img(picture, target_size=(x_size, y_size)))
+    base_imga = load_img(picture)
+    width, height = base_imga.size
+    if width > height:
+      aspect = height / width
+      tgt_y = (int)(y_size * aspect)
+      img = img_to_array(load_img(picture, target_size=(x_size, tgt_y)))
+      img = np.pad(img, [(0, 0), (0, y_size - tgt_y), (0,0)], 'constant')
+    elif width < height:
+      aspect = width / height
+      tgt_x = (int)(x_size * aspect)
+      img = img_to_array(load_img(picture, target_size=(tgt_x, y_size)))
+      img = np.pad(img, [(0, x_size - tgt_x), (0, 0), (0,0)], 'constant')
+    else:
+      img = img_to_array(load_img(picture, target_size=(x_size, y_size)))
     X.append(img)
-
     Y.append(1)
 
 print("\n Image load Success.")
