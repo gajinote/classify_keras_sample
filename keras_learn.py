@@ -13,78 +13,59 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 
+X = []
+Y = []
+
+x_size = 64
+y_size = 64
+lr_param = 0.005
+moment=0.05
+dog_dir = './dog/'
+cat_dir = './cat/'
+
 # ファイル名の取得
 def list_pictures(directory, ext='jpg|png'):
     return [os.path.join(root, f)
             for root, _, files in os.walk(directory) for f in files
             if re.match(r'([\w]+\.([\w]*\.)*(?:' + ext + '))', f.lower())]
 
+def image_to_input_data(images, X, Y, num, padding=False):
+  # global X
+  # global Y
+  for picture in images:
+    base_imga = load_img(picture)
+    width, height = base_imga.size
+    if padding == False or width == height:
+      img = img_to_array(load_img(picture, target_size=(x_size, y_size)))
+    
+    elif width > height:
+      aspect = height / width
+      tgt_y = (int)(y_size * aspect)
+      img = img_to_array(load_img(picture, target_size=(x_size, tgt_y)))
+      padd_1 = (int)((y_size - tgt_y) / 2)
+      padd_2 = (int)(y_size - tgt_y - padd_1)
+      img = np.pad(img, [(0, 0), (padd_1, padd_2), (0,0)], 'constant')
+    else:
+      aspect = width / height
+      tgt_x = (int)(x_size * aspect)
+      img = img_to_array(load_img(picture, target_size=(tgt_x, y_size)))
+      padd_1 = (int)((x_size - tgt_x) / 2)
+      padd_2 = (int)(x_size - tgt_x - padd_1)
+      img = np.pad(img, [(padd_1, padd_2), (0, 0), (0,0)], 'constant')
+    X.append(img)
+    Y.append(num)
+
 print("\n Pre load Success.")
 
 # フォルダの中にある画像を順次読み込む
 # カテゴリーは0から始める
 
-X = []
-Y = []
-
-x_size = 64
-y_size = 64
-lr_param = 0.01
-moment=0.01
-dog_dir = './dog/'
-cat_dir = './cat/'
-
 # 対象Aの画像
 cat_image = list_pictures(cat_dir, 'jpg')
-# print(cat_image)
-for picture in cat_image:
-    # img = img_to_array(load_img(picture, target_size=(x_size, y_size)))
-    base_imga = load_img(picture)
-    width, height = base_imga.size
-    if width > height:
-      aspect = height / width
-      tgt_y = (int)(y_size * aspect)
-      img = img_to_array(load_img(picture, target_size=(x_size, tgt_y)))
-      padd_1 = (int)((y_size - tgt_y) / 2)
-      padd_2 = (int)(y_size - tgt_y - padd_1)
-      img = np.pad(img, [(0, 0), (padd_1, padd_2), (0,0)], 'constant')
-    elif width < height:
-      aspect = width / height
-      tgt_x = (int)(x_size * aspect)
-      img = img_to_array(load_img(picture, target_size=(tgt_x, y_size)))
-      padd_1 = (int)((x_size - tgt_x) / 2)
-      padd_2 = (int)(x_size - tgt_x - padd_1)
-      img = np.pad(img, [(padd_1, padd_2), (0, 0), (0,0)], 'constant')
-    else:
-      img = img_to_array(load_img(picture, target_size=(x_size, y_size)))
-    X.append(img)
-    Y.append(0)
-
+image_to_input_data(cat_image, X, Y, 0)
 # 対象Bの画像
 dog_image = list_pictures(dog_dir, 'jpg')
-# print(dog_image)
-for picture in dog_image:
-    # img = img_to_array(load_img(picture, target_size=(x_size, y_size)))
-    base_imga = load_img(picture)
-    width, height = base_imga.size
-    if width > height:
-      aspect = height / width
-      tgt_y = (int)(y_size * aspect)
-      img = img_to_array(load_img(picture, target_size=(x_size, tgt_y)))
-      padd_1 = (int)((y_size - tgt_y) / 2)
-      padd_2 = (int)(y_size - tgt_y - padd_1)
-      img = np.pad(img, [(0, 0), (padd_1, padd_2), (0,0)], 'constant')
-    elif width < height:
-      aspect = width / height
-      tgt_x = (int)(x_size * aspect)
-      img = img_to_array(load_img(picture, target_size=(tgt_x, y_size)))
-      padd_1 = (int)((x_size - tgt_x) / 2)
-      padd_2 = (int)(x_size - tgt_x - padd_1)
-      img = np.pad(img, [(padd_1, padd_2), (0, 0), (0,0)], 'constant')
-    else:
-      img = img_to_array(load_img(picture, target_size=(x_size, y_size)))
-    X.append(img)
-    Y.append(1)
+image_to_input_data(dog_image, X, Y, 1)
 
 print("\n Image load Success.")
 
