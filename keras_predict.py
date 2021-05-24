@@ -46,12 +46,16 @@ for picture in cat_image:
       aspect = height / width
       tgt_y = (int)(y_size * aspect)
       img = img_to_array(load_img(picture, target_size=(x_size, tgt_y)))
-      img = np.pad(img, [(0, 0), (0, y_size - tgt_y), (0,0)], 'constant')
+      padd_1 = (int)((y_size - tgt_y) / 2)
+      padd_2 = (int)(y_size - tgt_y - padd_1)
+      img = np.pad(img, [(0, 0), (padd_1, padd_2), (0,0)], 'constant')
     elif width < height:
       aspect = width / height
       tgt_x = (int)(x_size * aspect)
       img = img_to_array(load_img(picture, target_size=(tgt_x, y_size)))
-      img = np.pad(img, [(0, x_size - tgt_x), (0, 0), (0,0)], 'constant')
+      padd_1 = (int)((x_size - tgt_x) / 2)
+      padd_2 = (int)(x_size - tgt_x - padd_1)
+      img = np.pad(img, [(padd_1, padd_2), (0, 0), (0,0)], 'constant')
     else:
       img = img_to_array(load_img(picture, target_size=(x_size, y_size)))
     X.append(img)
@@ -68,12 +72,16 @@ for picture in dog_image:
       aspect = height / width
       tgt_y = (int)(y_size * aspect)
       img = img_to_array(load_img(picture, target_size=(x_size, tgt_y)))
-      img = np.pad(img, [(0, 0), (0, y_size - tgt_y), (0,0)], 'constant')
+      padd_1 = (int)((y_size - tgt_y) / 2)
+      padd_2 = (int)(y_size - tgt_y - padd_1)
+      img = np.pad(img, [(0, 0), (padd_1, padd_2), (0,0)], 'constant')
     elif width < height:
       aspect = width / height
       tgt_x = (int)(x_size * aspect)
       img = img_to_array(load_img(picture, target_size=(tgt_x, y_size)))
-      img = np.pad(img, [(0, x_size - tgt_x), (0, 0), (0,0)], 'constant')
+      padd_1 = (int)((x_size - tgt_x) / 2)
+      padd_2 = (int)(x_size - tgt_x - padd_1)
+      img = np.pad(img, [(padd_1, padd_2), (0, 0), (0,0)], 'constant')
     else:
       img = img_to_array(load_img(picture, target_size=(x_size, y_size)))
     X.append(img)
