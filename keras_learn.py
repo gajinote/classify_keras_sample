@@ -20,8 +20,8 @@ x_size = 64
 y_size = 64
 lr_param = 0.005
 moment=0.05
-dog_dir = './dog/'
-cat_dir = './cat/'
+dog_dir = './dogs/'
+cat_dir = './cats/'
 
 # ファイル名の取得
 def list_pictures(directory, ext='jpg|png'):
@@ -82,7 +82,7 @@ X = X / 255.0
 Y = to_categorical(Y, 2)
 
 # 学習用データとテストデータ
-X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.33, random_state=111)
+X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.1, random_state=111)
 
 print("\n Dataset setting Success.")
 
@@ -95,14 +95,14 @@ model.add(Activation('relu'))
 model.add(Conv2D(32, (3, 3)))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.25))
+model.add(Dropout(0.5))
 
 model.add(Conv2D(64, (3, 3), padding='same'))
 model.add(Activation('relu'))
 model.add(Conv2D(64, (3, 3)))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.25))
+model.add(Dropout(0.5))
 
 model.add(Flatten())
 model.add(Dense(512))
@@ -123,7 +123,7 @@ model.compile(loss='categorical_crossentropy',
               metrics=['accuracy'])
 
 # 実行。出力はなしで設定(verbose=0)。
-history = model.fit(X_train, y_train, batch_size=5, epochs=200,
+history = model.fit(X_train, y_train, batch_size=10, epochs=200,
                    validation_data = (X_test, y_test), verbose = 1)
 
 # 重みの保存
