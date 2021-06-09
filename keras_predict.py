@@ -63,10 +63,10 @@ print("\n Pre load Success.")
 
 # 対象Aの画像
 cat_image = list_pictures(cat_dir, 'jpg')
-image_to_input_data(cat_image, X, Y, 0)
+image_to_input_data(cat_image, X, Y, 0, padding=False)
 # 対象Bの画像
 dog_image = list_pictures(dog_dir, 'jpg')
-image_to_input_data(dog_image, X, Y, 1)
+image_to_input_data(dog_image, X, Y, 1, padding=False)
 
 print("\n Image load Success.")
 
@@ -83,7 +83,7 @@ X = X / 255.0
 Y = to_categorical(Y, 2)
 
 # 学習用データとテストデータ
-X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.33)
+X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.5)
 
 print("\n Dataset setting Success.")
 
@@ -116,7 +116,7 @@ model.add(Activation('softmax'))
 model.load_weights('./checkpoint/my_checkpoint')
 
 # テストデータ10件の正解ラベル
-y_label = np.argmax(y_test[0:30], axis = 1)
+y_label = np.argmax(y_test, axis = 1)
 # true_classes = np.argmax(y_test[0:10], axis = 1)
 true_classes = []
 for i in y_label:
@@ -129,7 +129,7 @@ for i in y_label:
 
 
 # テストデータの予測ラベル
-x_label = np.argmax(model.predict(X_test[0:30]), axis=1)
+x_label = np.argmax(model.predict(X_test), axis=1)
 pred_class = []
 for i in x_label:
   label = ""
@@ -139,18 +139,23 @@ for i in x_label:
     label = "dog"
   pred_class.append(label)
 
-pred_probs = np.max(model.predict(X_test[0:30]), axis=1)
+pred_probs = np.max(model.predict(X_test), axis=1)
 pred_probs = ['{:.4f}'.format(i) for i in pred_probs]
 
 # テストデータの画像と正解ラベルを出力
 plt.figure(figsize=(16, 6))
-for i in range(30):
-  plt.subplot(3, 10, i+1)
-  plt.axis("off")
-  if pred_class[i] == true_classes[i]:
-    plt.title(true_classes[i] + '\n' + pred_probs[i])
-  else:
-    plt.title(true_classes[i] + '\n' + pred_probs[i], color = "red")
-  plt.imshow(X_test[i])
-plt.show()
+cnt = 0
+while 1:
+  for i in range(30):
+    plt.subplot(3, 10, i+1)
+    plt.axis("off")
+    if pred_class[cnt] == true_classes[cnt]:
+      plt.title(true_classes[cnt] + '\n' + pred_probs[cnt])
+    else:
+      plt.title(true_classes[cnt] + '\n' + pred_probs[cnt], color = "red")
+    plt.imshow(X_test[cnt])
+    cnt += 1
+  plt.show()
+  if cnt > 100 or cnt > len(X_test) - 60:
+    break
 print("\n evaluate finish.")
