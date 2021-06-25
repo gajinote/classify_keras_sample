@@ -48,6 +48,7 @@ def image_to_input_data(images, X, Y, num, padding=False):
       img = np.pad(img, [(0, 0), (padd_1, padd_2), (0,0)], 'constant')
     else:
       aspect = width / height
+      A
       tgt_x = (int)(x_size * aspect)
       img = img_to_array(load_img(picture, target_size=(tgt_x, y_size)))
       padd_1 = (int)((x_size - tgt_x) / 2)
@@ -143,9 +144,9 @@ pred_probs = np.max(model.predict(X_test), axis=1)
 pred_probs = ['{:.4f}'.format(i) for i in pred_probs]
 
 # テストデータの画像と正解ラベルを出力
-plt.figure(figsize=(16, 6))
 cnt = 0
 while 1:
+  plt.figure(figsize=(16, 6))
   for i in range(30):
     plt.subplot(3, 10, i+1)
     plt.axis("off")
