@@ -48,6 +48,7 @@ def image_to_input_data(images, X, Y, num, padding=False):
       img = np.pad(img, [(0, 0), (padd_1, padd_2), (0,0)], 'constant')
     else:
       aspect = width / height
+      A
       tgt_x = (int)(x_size * aspect)
       img = img_to_array(load_img(picture, target_size=(tgt_x, y_size)))
       padd_1 = (int)((x_size - tgt_x) / 2)
