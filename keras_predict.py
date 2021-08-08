@@ -113,7 +113,7 @@ model.add(Dense(2))       # クラスは2個
 model.add(Activation('softmax'))
 
 # データのロード
-model.load_weights('./checkpoint/my_checkpoint')
+model.load_weights('./80over/checkpoint/my_checkpoint')
 
 # テストデータ10件の正解ラベル
 y_label = np.argmax(y_test, axis = 1)
@@ -143,9 +143,9 @@ pred_probs = np.max(model.predict(X_test), axis=1)
 pred_probs = ['{:.4f}'.format(i) for i in pred_probs]
 
 # テストデータの画像と正解ラベルを出力
-plt.figure(figsize=(16, 6))
 cnt = 0
 while 1:
+  plt.figure(figsize=(16, 6))
   for i in range(30):
     plt.subplot(3, 10, i+1)
     plt.axis("off")

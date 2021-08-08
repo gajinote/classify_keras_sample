@@ -3,28 +3,35 @@
 
 import os, sys
 import re
+from keras_preprocessing.image.affine_transformations import random_rotation
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten, Conv2D, MaxPooling2D
-from tensorflow.keras.preprocessing.image import array_to_img, img_to_array, load_img
+from tensorflow.keras.preprocessing.image import array_to_img, img_to_array, load_img, ImageDataGenerator
 from tensorflow.keras.optimizers import SGD, Adagrad, Adam
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
+import random
 
 X = []
 Y = []
 
-x_size = 64
-y_size = 64
+x_size = 128
+y_size = 128
+# lr_param = 0.001
 lr_param = 0.001
 moment=0.09
 cat_dir = './training_set/cats/'
 dog_dir = './training_set/dogs/'
+# cat_dir = './test_set/cats/'
+# dog_dir = './test_set/dogs/'
 
 test_catdir = './test_set/cats/'
 test_dogdir = './test_set/dogs/'
+# test_catdir = './set2/cats/'
+# test_dogdir = './set2/dogs/'
 
 # ファイル名の取得
 def list_pictures(directory, ext='jpg|png'):
@@ -36,8 +43,8 @@ def image_to_input_data(images, X, Y, num, padding=False):
   # global X
   # global Y
   for picture in images:
-    base_imga = load_img(picture)
-    width, height = base_imga.size
+    base_image = load_img(picture)
+    width, height = base_image.size
     if padding == False or width == height:
       img = img_to_array(load_img(picture, target_size=(x_size, y_size)))
     
@@ -81,6 +88,16 @@ image_to_input_data(catimage, X_test, y_test, 0)
 dogimage = list_pictures(test_dogdir, 'jpg')
 image_to_input_data(dogimage, X_test, y_test, 1)
 
+# datagen = ImageDataGenerator(
+#     featurewise_center=True,
+#     featurewise_std_normalization=True,
+#     rotation_range=90,
+#     width_shift_range=0.2,
+#     height_shift_range=0.2,
+#     horizontal_flip=True,
+#     vertical_flip=True)
+# 
+# datagen.fit(X_train)
 
 print("\n Image load Success.")
 
@@ -109,10 +126,10 @@ print("\n Dataset setting Success.")
 # CNNを構築
 model = Sequential()
 
-model.add(Conv2D(32, (3, 3), padding='same',
+model.add(Conv2D(64, (3, 3), padding='same',
                  input_shape=X_train.shape[1:]))
 model.add(Activation('relu'))
-model.add(Conv2D(32, (3, 3)))
+model.add(Conv2D(64, (3, 3)))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.4))
@@ -125,6 +142,9 @@ model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.4))
 
 model.add(Flatten())
+model.add(Dense(512))
+model.add(Activation('relu'))
+model.add(Dropout(0.5))
 model.add(Dense(512))
 model.add(Activation('relu'))
 model.add(Dropout(0.5))
@@ -143,11 +163,12 @@ if len(sys.argv) >= 2:
 
 # コンパイル
 model.compile(loss='categorical_crossentropy',
-              optimizer=SGD(learning_rate=lr_param, momentum=moment),
+              # optimizer=SGD(learning_rate=lr_param, momentum=moment),
+              optimizer=Adagrad(learning_rate=lr_param),
               metrics=['accuracy'])
 
 # 実行。出力はなしで設定(verbose=0)。
-history = model.fit(X_train, y_train, batch_size=8, epochs=90,
+history = model.fit(X_train, y_train, batch_size=5, epochs=30,
                    validation_data = (X_test, y_test), verbose = 1)
 
 # 重みの保存
