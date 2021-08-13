@@ -61,8 +61,8 @@ model.load_weights('./80over/checkpoint/my_checkpoint')
 
 # メインウィンドウ
 main_win = tkinter.Tk()
-main_win.title("Dog/Cat/Detector")
-main_win.geometry("640x480")
+main_win.title("Dog/Cat/Descriminator")
+main_win.geometry("640x240")
 
 # メインフレーム
 main_frm = ttk.Frame(main_win)
@@ -81,6 +81,7 @@ exec_btn = ttk.Button(main_frm, text="判定")
 folder_label.grid(column=0, row=0, pady=10)
 folder_box.grid(column=1, row=0, columnspan=4, sticky=tkinter.EW, padx=5)
 folder_btn.grid(column=5, row=0)
+
 exec_btn.grid(column=1, row=1)
 
 main_win.mainloop()
