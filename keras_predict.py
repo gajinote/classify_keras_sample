@@ -130,30 +130,20 @@ for i in y_label:
 
 
 # テストデータの予測ラベル
-x_label = np.argmax(model.predict(X_test), axis=1)
-pred_class = []
-for i in x_label:
-  label = ""
-  if i == 0:
-    label= "cat"
-  else:
-    label = "dog"
-  pred_class.append(label)
+x_label = model.predict(X_test)
 
-pred_probs = np.max(model.predict(X_test), axis=1)
-pred_probs = ['{:.4f}'.format(i) for i in pred_probs]
+pred_probs = model.predict(X_test)
+pred_probs = [['{:.4f}'.format(i), '{:.4f}'.format(j)]  for i, j in pred_probs]
 
 # テストデータの画像と正解ラベルを出力
 cnt = 0
+color_r="black"
 while 1:
   plt.figure(figsize=(16, 6))
   for i in range(5):
     plt.subplot(3, 10, i+1)
     plt.axis("off")
-    if pred_class[cnt] == true_classes[cnt]:
-      plt.title(true_classes[cnt] + '\n' + pred_probs[cnt])
-    else:
-      plt.title(true_classes[cnt] + '\n' + pred_probs[cnt], color = "red")
+    plt.title("cat:" + pred_probs[cnt][0] + "\n" + "dog:" + pred_probs[cnt][1], color = color_r)
     plt.imshow(X_test[cnt])
     cnt += 1
   plt.show()
