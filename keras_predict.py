@@ -147,7 +147,7 @@ pred_probs = ['{:.4f}'.format(i) for i in pred_probs]
 cnt = 0
 while 1:
   plt.figure(figsize=(16, 6))
-  for i in range(30):
+  for i in range(5):
     plt.subplot(3, 10, i+1)
     plt.axis("off")
     if pred_class[cnt] == true_classes[cnt]:
@@ -157,6 +157,6 @@ while 1:
     plt.imshow(X_test[cnt])
     cnt += 1
   plt.show()
-  if cnt > 100 or cnt > len(X_test) - 60:
+  if cnt >= 5 or cnt > len(X_test) - 10:
     break
 print("\n evaluate finish.")
