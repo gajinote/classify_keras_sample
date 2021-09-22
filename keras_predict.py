@@ -16,6 +16,7 @@ from PIL import Image
 
 X = []
 Y = []
+X_L = []
 
 x_size = 64
 y_size = 64
@@ -33,6 +34,7 @@ def list_pictures(directory, ext='jpg|png'):
 def image_to_input_data(images, X, Y, num, padding=False):
   # global X
   # global Y
+  global X_L
   for picture in images:
     base_imga = load_img(picture)
     width, height = base_imga.size
@@ -48,7 +50,6 @@ def image_to_input_data(images, X, Y, num, padding=False):
       img = np.pad(img, [(0, 0), (padd_1, padd_2), (0,0)], 'constant')
     else:
       aspect = width / height
-      A
       tgt_x = (int)(x_size * aspect)
       img = img_to_array(load_img(picture, target_size=(tgt_x, y_size)))
       padd_1 = (int)((x_size - tgt_x) / 2)
@@ -56,6 +57,8 @@ def image_to_input_data(images, X, Y, num, padding=False):
       img = np.pad(img, [(padd_1, padd_2), (0, 0), (0,0)], 'constant')
     X.append(img)
     Y.append(num)
+    img = img_to_array(load_img(picture, target_size=(x_size*2, y_size*2)))
+    X_L.append(img)
 
 print("\n Pre load Success.")
 
@@ -119,14 +122,6 @@ model.load_weights('./80over/checkpoint/my_checkpoint')
 # テストデータ10件の正解ラベル
 y_label = np.argmax(y_test, axis = 1)
 # true_classes = np.argmax(y_test[0:10], axis = 1)
-true_classes = []
-for i in y_label:
-  label = ""
-  if i == 0:
-    label= "cat"
-  else:
-    label = "dog"
-  true_classes.append(label)
 
 
 # テストデータの予測ラベル
@@ -138,15 +133,10 @@ pred_probs = [['{:.4f}'.format(i), '{:.4f}'.format(j)]  for i, j in pred_probs]
 # テストデータの画像と正解ラベルを出力
 cnt = 0
 color_r="black"
-while 1:
-  plt.figure(figsize=(16, 6))
-  for i in range(5):
-    plt.subplot(3, 10, i+1)
-    plt.axis("off")
-    plt.title("cat:" + pred_probs[cnt][0] + "\n" + "dog:" + pred_probs[cnt][1], color = color_r)
-    plt.imshow(X_test[cnt])
-    cnt += 1
-  plt.show()
-  if cnt >= 5 or cnt > len(X_test) - 10:
-    break
+plt.figure(figsize=(16, 6))
+plt.subplot(3, 10, 1)
+plt.axis("off")
+plt.title("cat:" + pred_probs[cnt][0] + "\n" + "dog:" + pred_probs[cnt][1], color = color_r)
+plt.imshow(X_test[cnt])
+plt.show()
 print("\n evaluate finish.")
