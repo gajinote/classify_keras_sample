@@ -133,8 +133,6 @@ pred_probs = [['{:.4f}'.format(i), '{:.4f}'.format(j)]  for i, j in pred_probs]
 # テストデータの画像と正解ラベルを出力
 cnt = 0
 color_r="black"
-plt.figure(figsize=(16, 6))
-plt.subplot(3, 10, 1)
 plt.axis("off")
 plt.title("cat:" + pred_probs[cnt][0] + "\n" + "dog:" + pred_probs[cnt][1], color = color_r)
 plt.imshow(X_test[cnt])
