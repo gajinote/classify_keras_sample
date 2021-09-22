@@ -134,7 +134,7 @@ pred_probs = [['{:.4f}'.format(i), '{:.4f}'.format(j)]  for i, j in pred_probs]
 cnt = 0
 color_r="black"
 plt.axis("off")
-plt.title("cat:" + pred_probs[cnt][0] + "\n" + "dog:" + pred_probs[cnt][1], color = color_r)
+plt.title("cat: " + pred_probs[cnt][0] + "\n" + "dog: " + pred_probs[cnt][1], color = color_r)
 plt.imshow(X_test[cnt])
 plt.show()
 print("\n evaluate finish.")
