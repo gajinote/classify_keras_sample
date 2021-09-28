@@ -24,6 +24,11 @@ def load_file():
   path = filedialog.askopenfilename(filetypes=fType, initialdir=iDir)
   file_path.set(path)
 
+# 判定
+def exec_decisiotn():
+  path = file_path.get()
+  print(path)
+
 X = []
 Y = []
 
@@ -75,7 +80,7 @@ file_path = tkinter.StringVar()
 folder_label = ttk.Label(main_frm, text="画像ファイル指定")
 folder_box = ttk.Entry(main_frm, textvariable=file_path)
 folder_btn = ttk.Button(main_frm, text="参照", command=load_file)
-exec_btn = ttk.Button(main_frm, text="判定")
+exec_btn = ttk.Button(main_frm, text="判定", command=exec_decisiotn)
 
 # ウィジェット配置
 folder_label.grid(column=0, row=0, pady=10)
