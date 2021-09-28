@@ -36,7 +36,7 @@ def exec_decisiotn():
   X = np.asarray(X)
   pred_probs = model.predict(X)  
   pred_probs = [['{:.4f}'.format(i), '{:.4f}'.format(j)]  for i, j in pred_probs]
-  print(pred_probs[0][0] + ", " + pred_probs[0][1])
+  print("cat: " + pred_probs[0][0] + ", dog: " + pred_probs[0][1])
 
 X = []
 Y = []
