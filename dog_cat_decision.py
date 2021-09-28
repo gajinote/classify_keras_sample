@@ -26,8 +26,17 @@ def load_file():
 
 # 判定
 def exec_decisiotn():
+  global x_size
+  global y_size
   path = file_path.get()
   print(path)
+  img = img_to_array(load_img(path, target_size=(x_size, y_size)))
+  X = []
+  X.append(img)
+  X = np.asarray(X)
+  pred_probs = model.predict(X)  
+  pred_probs = [['{:.4f}'.format(i), '{:.4f}'.format(j)]  for i, j in pred_probs]
+  print(pred_probs[0][0] + ", " + pred_probs[0][1])
 
 X = []
 Y = []
