@@ -1,21 +1,16 @@
 #!python3
 # -*- coding: utf-8
 
-import os, glob
-import re
-import cv2, tkinter
+import os
+import tkinter
 from tkinter import ttk
 from tkinter import filedialog
-from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten, Conv2D, MaxPooling2D
-from tensorflow.keras.preprocessing.image import array_to_img, img_to_array, load_img
-from tensorflow.keras.optimizers import SGD, Adagrad
+from tensorflow.keras.preprocessing.image import img_to_array, load_img
 import numpy as np
-import pandas as pd
-from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
-from PIL import Image
+
 
 # ファイル読み込み
 def load_file():
@@ -57,7 +52,6 @@ def clear_plt():
     plt.clf()
     plt.close()
   plt_show_flg = 0
-
 
 X = []
 
