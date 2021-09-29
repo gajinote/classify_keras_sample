@@ -49,7 +49,6 @@ def exec_decisiotn():
   plt.show()
 
 X = []
-Y = []
 
 x_size = 64
 y_size = 64
@@ -86,7 +85,7 @@ model.load_weights('./80over/checkpoint/my_checkpoint')
 # メインウィンドウ
 main_win = tkinter.Tk()
 main_win.title("Dog/Cat/Descriminator")
-main_win.geometry("640x240")
+main_win.geometry("480x100")
 
 # メインフレーム
 main_frm = ttk.Frame(main_win)
@@ -103,8 +102,8 @@ exec_btn = ttk.Button(main_frm, text="判定", command=exec_decisiotn)
 
 # ウィジェット配置
 folder_label.grid(column=0, row=0, pady=10)
-folder_box.grid(column=1, row=0, columnspan=4, sticky=tkinter.EW, padx=5)
-folder_btn.grid(column=5, row=0)
+folder_box.grid(column=1, row=0, columnspan=6, sticky=tkinter.EW, padx=5)
+folder_btn.grid(column=7, row=0)
 
 exec_btn.grid(column=1, row=1)
 
