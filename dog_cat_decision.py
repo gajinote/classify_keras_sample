@@ -28,6 +28,7 @@ def load_file():
 def exec_decisiotn():
   global x_size
   global y_size
+  global plt_show_flg
   path = file_path.get()
   print(path)
   img = img_to_array(load_img(path, target_size=(x_size, y_size)))
@@ -42,13 +43,25 @@ def exec_decisiotn():
   pred_probs = [['{:.4f}'.format(i), '{:.4f}'.format(j)]  for i, j in pred_probs]
   print("cat: " + pred_probs[0][0] + ", dog: " + pred_probs[0][1])
   # テストデータの画像と正解ラベルを出力
+  plt_show_flg = 1
   color_r="black"
   plt.axis("off")
   plt.title("cat: " + pred_probs[0][0] + "\n" + "dog: " + pred_probs[0][1], color = color_r)
   plt.imshow(X[0])
   plt.show()
 
+def clear_plt():
+  global plt_show_flg
+  if (plt_show_flg == 1):
+    print("clear")
+    plt.clf()
+    plt.close()
+  plt_show_flg = 0
+
+
 X = []
+
+plt_show_flg = 0
 
 x_size = 64
 y_size = 64
@@ -99,7 +112,7 @@ folder_label = ttk.Label(main_frm, text="画像ファイル指定")
 folder_box = ttk.Entry(main_frm, textvariable=file_path)
 folder_btn = ttk.Button(main_frm, text="参照", command=load_file)
 exec_btn = ttk.Button(main_frm, text="判定", command=exec_decisiotn)
-close_btn = ttk.Button(main_frm, text="クリア")
+close_btn = ttk.Button(main_frm, text="クリア",command=clear_plt)
 blnk_label = ttk.Label(main_frm, text="         ")
 
 # ウィジェット配置
