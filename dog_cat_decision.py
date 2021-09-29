@@ -99,12 +99,16 @@ folder_label = ttk.Label(main_frm, text="画像ファイル指定")
 folder_box = ttk.Entry(main_frm, textvariable=file_path)
 folder_btn = ttk.Button(main_frm, text="参照", command=load_file)
 exec_btn = ttk.Button(main_frm, text="判定", command=exec_decisiotn)
+close_btn = ttk.Button(main_frm, text="クリア")
+blnk_label = ttk.Label(main_frm, text="         ")
 
 # ウィジェット配置
 folder_label.grid(column=0, row=0, pady=10)
-folder_box.grid(column=1, row=0, columnspan=6, sticky=tkinter.EW, padx=5)
+folder_box.grid(column=1, row=0, columnspan=6, sticky=tkinter.EW, padx=0)
 folder_btn.grid(column=7, row=0)
 
 exec_btn.grid(column=1, row=1)
+blnk_label.grid(column=2, row=1)
+close_btn.grid(column=4, row=1)
 
 main_win.mainloop()
