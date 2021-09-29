@@ -34,9 +34,19 @@ def exec_decisiotn():
   X = []
   X.append(img)
   X = np.asarray(X)
+  # 画素値を0から1の範囲に変換
+  X = X.astype('float32')
+  X = X / 255.0
+
   pred_probs = model.predict(X)  
   pred_probs = [['{:.4f}'.format(i), '{:.4f}'.format(j)]  for i, j in pred_probs]
   print("cat: " + pred_probs[0][0] + ", dog: " + pred_probs[0][1])
+  # テストデータの画像と正解ラベルを出力
+  color_r="black"
+  plt.axis("off")
+  plt.title("cat: " + pred_probs[0][0] + "\n" + "dog: " + pred_probs[0][1], color = color_r)
+  plt.imshow(X[0])
+  plt.show()
 
 X = []
 Y = []
