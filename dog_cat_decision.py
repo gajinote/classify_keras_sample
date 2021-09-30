@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 
 # ファイル読み込み
 def load_file():
-  fType = [("静止画ファイル", "*.jpg;*.png, *.jpeg")]
+  fType = [("静止画ファイル", "*.jpg *.png *.jpeg")]
   iDir = os.path.abspath(os.path.dirname(__file__))
   path = filedialog.askopenfilename(filetypes=fType, initialdir=iDir)
   file_path.set(path)
