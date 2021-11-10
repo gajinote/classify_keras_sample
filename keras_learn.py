@@ -23,13 +23,13 @@ y_size = 128
 # lr_param = 0.001
 lr_param = 0.001
 moment=0.09
-cat_dir = './training_set/cats/'
-dog_dir = './training_set/dogs/'
+cat_dir = './train/cat/'
+dog_dir = './train/dog/'
 # cat_dir = './test_set/cats/'
 # dog_dir = './test_set/dogs/'
 
-test_catdir = './test_set/cats/'
-test_dogdir = './test_set/dogs/'
+test_catdir = './test/cat/'
+test_dogdir = './test/dog/'
 # test_catdir = './set2/cats/'
 # test_dogdir = './set2/dogs/'
 
@@ -83,10 +83,10 @@ image_to_input_data(cat_image, X_train, y_train, 0)
 dog_image = list_pictures(dog_dir, 'jpg')
 image_to_input_data(dog_image, X_train, y_train, 1)
 
-catimage = list_pictures(test_catdir, 'jpg')
-image_to_input_data(catimage, X_test, y_test, 0)
-dogimage = list_pictures(test_dogdir, 'jpg')
-image_to_input_data(dogimage, X_test, y_test, 1)
+# catimage = list_pictures(test_catdir, 'jpg')
+# image_to_input_data(catimage, X_test, y_test, 0)
+# dogimage = list_pictures(test_dogdir, 'jpg')
+# image_to_input_data(dogimage, X_test, y_test, 1)
 
 # datagen = ImageDataGenerator(
 #     featurewise_center=True,
@@ -104,22 +104,22 @@ print("\n Image load Success.")
 # arrayに変換
 X_train = np.asarray(X_train)
 y_train = np.asarray(y_train)
-X_test = np.asarray(X_test)
-y_trest = np.asarray(y_test)
+# X_test = np.asarray(X_test)
+# y_trest = np.asarray(y_test)
 
 # 画素値を0から1の範囲に変換
 X_train = X_train.astype('float32')
 X_train = X_train / 255.0
-X_test = X_test.astype('float32')
-X_test = X_test / 255.0
+# X_test = X_test.astype('float32')
+# X_test = X_test / 255.0
 
 # クラスの形式を変換
 # Y = np_utils.to_categorical(Y, 2)
 y_train = to_categorical(y_train, 2)
-y_test = to_categorical(y_test, 2)
+# y_test = to_categorical(y_test, 2)
 
 # 学習用データとテストデータ
-# X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.1, random_state=111)
+X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size=0.1, random_state=111)
 
 print("\n Dataset setting Success.")
 
@@ -168,7 +168,7 @@ model.compile(loss='categorical_crossentropy',
               metrics=['accuracy'])
 
 # 実行。出力はなしで設定(verbose=0)。
-history = model.fit(X_train, y_train, batch_size=5, epochs=30,
+history = model.fit(X_train, y_train, batch_size=5, epochs=10,
                    validation_data = (X_test, y_test), verbose = 1)
 
 # 重みの保存
