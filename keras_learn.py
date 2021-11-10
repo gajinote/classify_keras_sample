@@ -134,6 +134,11 @@ model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Activation('relu'))
 model.add(Dropout(0.4))
 
+model.add(Conv2D(96, (3, 3)))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Activation('relu'))
+model.add(Dropout(0.4))
+
 model.add(Flatten())
 model.add(Dense(512))
 model.add(Activation('relu'))
@@ -161,7 +166,7 @@ model.compile(loss='categorical_crossentropy',
               metrics=['accuracy'])
 
 # 実行。出力はなしで設定(verbose=0)。
-history = model.fit(X_train, y_train, batch_size=5, epochs=10,
+history = model.fit(X_train, y_train, batch_size=5, epochs=30,
                    validation_data = (X_test, y_test), verbose = 1)
 
 # 重みの保存
